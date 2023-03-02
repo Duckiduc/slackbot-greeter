@@ -9,21 +9,30 @@ const app = new App({
   port: process.env.PORT || 3000,
 });
 
+const greetings = {
+  night: "Good night!",
+  morning: "Good morning!",
+  afternoon: "Good afternoon!",
+  evening: "Good evening!",
+};
+
 app.command("/greet", async ({ command, ack, say }) => {
   try {
     await ack();
     const currentHour = new Date().getHours();
-    if (currentHour < 6) {
-      await say("Good night!");
-    } else if (currentHour < 12) {
-      await say("Good morning!");  
-    } else if (currentHour < 18) {
-      await say("Good afternoon!");
-    } else if (currentHour < 22) {
-      await say("Good evening!")
-    } else {
-      await say("Good night!");
-    }
+    const timeOfDay = (() => {
+      if (currentHour < 6 || currentHour >= 22) {
+        return "night";
+      }
+      if (currentHour < 12) {
+        return "morning";
+      }
+      if (currentHour < 18) {
+        return "afternoon";
+      }
+      return "evening";
+    })();
+    await say(greetings[timeOfDay]);
     let txt = command.text;
   } catch (error) {
     console.log("err");
