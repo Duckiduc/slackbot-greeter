@@ -9,7 +9,7 @@
   "author": "Duckiduc",
   "license": "ISC",
   "dependencies": {
-    "@slack/bolt": "^4.4.0",
+    "@slack/bolt": "^4.5.0",
     "dotenv": "^17.2.3"
   }
 }
